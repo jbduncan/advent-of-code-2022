@@ -19,15 +19,24 @@ public final class App {
   static void execute(List<String> args, PrintWriter out) throws IOException {
     var inputFile = Path.of(args.get(0));
     var topN = args.size() > 2 ? Integer.parseInt(args.get(2)) : 1;
-    out.println(
+
+    List<String> elves =
         Splitter.onPattern("\\R\\R")
             .splitToStream(Files.readString(inputFile))
             .map(String::strip)
-            .map(caloriesList -> Splitter.onPattern("\\R").splitToList(caloriesList))
+            .toList();
+    List<Integer> caloriesPerElf =
+        elves.stream()
+            .map(elf -> Splitter.onPattern("\\R").splitToList(elf))
             .map(caloriesList -> caloriesList.stream().mapToInt(Integer::parseInt).sum())
+            .toList();
+    int totalCaloriesOfTopNElves =
+        caloriesPerElf.stream()
             .sorted(Comparator.reverseOrder())
-            .limit(topN)
             .mapToInt(i -> i)
-            .sum());
+            .limit(topN)
+            .sum();
+
+    out.println(totalCaloriesOfTopNElves);
   }
 }
