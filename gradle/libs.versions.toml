@@ -1,4 +1,6 @@
 [versions]
+googleJavaFormat = "1.15.0"
+java = "17"
 junitJupiter = "5.9.1"
 
 [libraries]

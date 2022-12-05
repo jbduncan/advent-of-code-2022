@@ -4,7 +4,7 @@ plugins {
   alias(libs.plugins.gradleVersions)
 }
 
-group = "me.jbduncan.adventofcode2022.day1"
+group = "me.jbduncan.adventofcode2022.day2"
 version = "1.0-SNAPSHOT"
 
 repositories {

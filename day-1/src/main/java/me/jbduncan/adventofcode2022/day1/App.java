@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public final class App {
+
   public static void main(String[] args) throws IOException {
     execute(Arrays.asList(args), new PrintWriter(System.out, true, UTF_8));
   }
