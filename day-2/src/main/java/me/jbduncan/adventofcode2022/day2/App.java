@@ -24,7 +24,7 @@ public final class App {
     var parseStrategy =
         decryptCorrectly
             ? ParseStrategy.SECOND_VALUE_IS_OUTCOME
-            : ParseStrategy.SECOND_VALUE_IS_THEIR_MOVE;
+            : ParseStrategy.SECOND_VALUE_IS_YOUR_MOVE;
     var lines = MoreFiles.asCharSource(inputFile, UTF_8).readLines();
     var gameStrategies = parse(lines, parseStrategy);
     var totalScore = gameStrategies.stream().mapToInt(GameStrategy::score).sum();
@@ -70,23 +70,23 @@ public final class App {
       };
     }
 
-    Move moveThatWinsAgainst() {
-      return switch (this) {
-        case ROCK -> SCISSORS;
-        case PAPER -> ROCK;
-        case SCISSORS -> PAPER;
-      };
-    }
-
-    Move moveThatDrawsAgainst() {
-      return this;
-    }
-
-    Move moveThatLosesAgainst() {
+    Move winsAgainst() {
       return switch (this) {
         case ROCK -> PAPER;
         case PAPER -> SCISSORS;
         case SCISSORS -> ROCK;
+      };
+    }
+
+    Move drawsWith() {
+      return this;
+    }
+
+    Move losesTo() {
+      return switch (this) {
+        case ROCK -> SCISSORS;
+        case PAPER -> ROCK;
+        case SCISSORS -> PAPER;
       };
     }
   }
@@ -108,7 +108,7 @@ public final class App {
   }
 
   private enum ParseStrategy {
-    SECOND_VALUE_IS_THEIR_MOVE,
+    SECOND_VALUE_IS_YOUR_MOVE,
     SECOND_VALUE_IS_OUTCOME
   }
 
@@ -127,16 +127,16 @@ public final class App {
                   };
               var yourMove =
                   switch (parseStrategy) {
-                    case SECOND_VALUE_IS_THEIR_MOVE -> switch (parts.get(1)) {
+                    case SECOND_VALUE_IS_YOUR_MOVE -> switch (parts.get(1)) {
                       case "X" -> Move.ROCK;
                       case "Y" -> Move.PAPER;
                       case "Z" -> Move.SCISSORS;
                       default -> throw unreachable();
                     };
                     case SECOND_VALUE_IS_OUTCOME -> switch (parts.get(1)) {
-                      case "X" -> theirMove.moveThatWinsAgainst();
-                      case "Y" -> theirMove.moveThatDrawsAgainst();
-                      case "Z" -> theirMove.moveThatLosesAgainst();
+                      case "X" -> theirMove.losesTo();
+                      case "Y" -> theirMove.drawsWith();
+                      case "Z" -> theirMove.winsAgainst();
                       default -> throw unreachable();
                     };
                   };
