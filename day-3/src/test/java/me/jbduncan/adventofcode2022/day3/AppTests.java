@@ -14,7 +14,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class AppTest {
+class AppTests {
 
   private static Path tempFile(String contents) throws IOException {
     var tempFile = Files.createTempFile("", "");

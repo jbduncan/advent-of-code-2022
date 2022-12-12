@@ -9,6 +9,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.io.IOException;
@@ -50,9 +51,9 @@ public final class App {
   private static ImmutableList<String> toGroupsOfThreeRucksacks(Path inputFile) throws IOException {
     var contents = Files.readString(inputFile, UTF_8);
     ImmutableList.Builder<String> groupsOfThreeRucksacksBuilder = ImmutableList.builder();
-    Iterable<String> rucksacks = contents.lines()::iterator;
     var currentElfTrio = new StringBuilder();
     int rucksacksProcessed = 0;
+    Iterable<String> rucksacks = contents.lines()::iterator;
     for (var rucksack : rucksacks) {
       currentElfTrio.append(rucksack);
       rucksacksProcessed++;
@@ -68,27 +69,25 @@ public final class App {
   }
 
   private static Character threeRucksacksToCommonItemType(String threeRucksacks) {
-    Set<Character> rucksackIntersection =
-        threeRucksacks
-            .lines()
-            .map(Lists::charactersOf)
-            .map(Set::copyOf)
-            .reduce(Sets::intersection)
-            .orElseThrow();
-    return getOnlyElement(rucksackIntersection);
+    return threeRucksacks
+        .lines()
+        .map(App::uniqueChars)
+        .reduce(Sets::intersection)
+        .map(Iterables::getOnlyElement)
+        .orElseThrow();
   }
 
   private static Character rucksackToCommonItemType(String rucksack) {
     var firstCompartment = rucksack.substring(0, rucksack.length() / 2);
     var secondCompartment = rucksack.substring(rucksack.length() / 2);
-    ImmutableSet<Character> firstCompartmentUniqueItemTypes = uniqueChars(firstCompartment);
-    ImmutableSet<Character> secondCompartmentUniqueItemTypes = uniqueChars(secondCompartment);
-    Set<Character> commonItemTypes =
+    Set<Character> firstCompartmentUniqueItemTypes = uniqueChars(firstCompartment);
+    Set<Character> secondCompartmentUniqueItemTypes = uniqueChars(secondCompartment);
+    var commonItemTypes =
         Sets.intersection(firstCompartmentUniqueItemTypes, secondCompartmentUniqueItemTypes);
     return getOnlyElement(commonItemTypes);
   }
 
-  private static ImmutableSet<Character> uniqueChars(String string) {
+  private static Set<Character> uniqueChars(String string) {
     return ImmutableSet.copyOf(Lists.charactersOf(string));
   }
 
