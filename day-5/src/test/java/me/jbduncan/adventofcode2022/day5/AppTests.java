@@ -26,49 +26,55 @@ class AppTests {
   }
 
   @Nested
-  class GivenStar7Input {
+  class GivenStar9Input {
 
     @Nested
     class WhenRunningApp {
 
       @Test
-      void thenItReturns2() throws IOException {
+      void thenItReturnsCmz() throws IOException {
         var tempFile =
             tempFile(
                 """
-                2-4,6-8
-                2-3,4-5
-                5-7,7-9
-                2-8,3-7
-                6-6,4-6
-                2-6,4-8
+                    [D]   \s
+                [N] [C]   \s
+                [Z] [M] [P]
+                 1   2   3\s
+
+                move 1 from 2 to 1
+                move 3 from 1 to 3
+                move 2 from 2 to 1
+                move 1 from 1 to 2
                 """);
         var out = executeAndReturnOut(tempFile);
-        assertThat(out).isEqualTo("2");
+        assertThat(out).isEqualTo("CMZ");
       }
     }
   }
 
   @Nested
-  class GivenStar8Input {
+  class GivenStar10Input {
 
     @Nested
     class WhenRunningApp {
 
       @Test
-      void thenItReturns4() throws IOException {
+      void thenItReturnsMcd() throws IOException {
         var tempFile =
             tempFile(
                 """
-                2-4,6-8
-                2-3,4-5
-                5-7,7-9
-                2-8,3-7
-                6-6,4-6
-                2-6,4-8
+                    [D]   \s
+                [N] [C]   \s
+                [Z] [M] [P]
+                 1   2   3\s
+
+                move 1 from 2 to 1
+                move 3 from 1 to 3
+                move 2 from 2 to 1
+                move 1 from 1 to 2
                 """);
-        var out = executeAndReturnOut(tempFile, "--overlaps");
-        assertThat(out).isEqualTo("4");
+        var out = executeAndReturnOut(tempFile, "--crate-mover-9001");
+        assertThat(out).isEqualTo("MCD");
       }
     }
   }

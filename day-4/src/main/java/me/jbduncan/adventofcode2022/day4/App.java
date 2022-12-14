@@ -1,4 +1,4 @@
-package me.jbduncan.adventofcode2022.day4;
+package me.jbduncan.adventofcode2022.day5;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
