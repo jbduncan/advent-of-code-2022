@@ -19,7 +19,7 @@ class AppTests {
     return tempFile;
   }
 
-  private static String executeAndReturnOut(Object... args) throws IOException {
+  private static String executeAndReturnStdOut(Object... args) throws IOException {
     var out = new StringWriter();
     App.execute(Arrays.stream(args).map(Object::toString).toList(), new PrintWriter(out, true));
     return out.toString().strip();
@@ -46,7 +46,7 @@ class AppTests {
                 move 2 from 2 to 1
                 move 1 from 1 to 2
                 """);
-        var out = executeAndReturnOut(tempFile);
+        var out = executeAndReturnStdOut(tempFile);
         assertThat(out).isEqualTo("CMZ");
       }
     }
@@ -73,7 +73,7 @@ class AppTests {
                 move 2 from 2 to 1
                 move 1 from 1 to 2
                 """);
-        var out = executeAndReturnOut(tempFile, "--crate-mover-9001");
+        var out = executeAndReturnStdOut(tempFile, "--crate-mover-9001");
         assertThat(out).isEqualTo("MCD");
       }
     }

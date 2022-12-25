@@ -22,7 +22,7 @@ class AppTests {
     return tempFile;
   }
 
-  private static String executeAndReturnOut(Object... args) throws IOException {
+  private static String executeAndReturnStdOut(Object... args) throws IOException {
     var out = new StringWriter();
     App.execute(Arrays.stream(args).map(Object::toString).toList(), new PrintWriter(out, true));
     return out.toString().strip();
@@ -46,7 +46,7 @@ class AppTests {
                 ttgJtRGJQctTZtZT
                 CrZsJsPPZsGzwwsLwLmpwMDw
                 """);
-        var out = executeAndReturnOut(tempFile);
+        var out = executeAndReturnStdOut(tempFile);
         assertThat(out).isEqualTo("157");
       }
     }
@@ -70,7 +70,7 @@ class AppTests {
                 ttgJtRGJQctTZtZT
                 CrZsJsPPZsGzwwsLwLmpwMDw
                 """);
-        var out = executeAndReturnOut(tempFile, "--elf-trios");
+        var out = executeAndReturnStdOut(tempFile, "--elf-trios");
         assertThat(out).isEqualTo("70");
       }
     }

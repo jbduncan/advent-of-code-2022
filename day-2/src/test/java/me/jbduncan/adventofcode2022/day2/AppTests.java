@@ -19,7 +19,7 @@ class AppTests {
     return tempFile;
   }
 
-  private static String executeAndReturnOut(Object... args) throws IOException {
+  private static String executeAndReturnStdOut(Object... args) throws IOException {
     var out = new StringWriter();
     App.execute(Arrays.stream(args).map(Object::toString).toList(), new PrintWriter(out, true));
     return out.toString().strip();
@@ -40,7 +40,7 @@ class AppTests {
                 B X
                 C Z
                 """);
-        var out = executeAndReturnOut(tempFile);
+        var out = executeAndReturnStdOut(tempFile);
         assertThat(out).isEqualTo("15");
       }
     }
@@ -61,7 +61,7 @@ class AppTests {
                 B X
                 C Z
                 """);
-        var out = executeAndReturnOut(tempFile, "--decrypt-correctly");
+        var out = executeAndReturnStdOut(tempFile, "--decrypt-correctly");
         assertThat(out).isEqualTo("12");
       }
     }

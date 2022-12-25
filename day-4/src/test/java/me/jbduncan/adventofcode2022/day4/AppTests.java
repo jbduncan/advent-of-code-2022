@@ -19,7 +19,7 @@ class AppTests {
     return tempFile;
   }
 
-  private static String executeAndReturnOut(Object... args) throws IOException {
+  private static String executeAndReturnStdOut(Object... args) throws IOException {
     var out = new StringWriter();
     App.execute(Arrays.stream(args).map(Object::toString).toList(), new PrintWriter(out, true));
     return out.toString().strip();
@@ -43,7 +43,7 @@ class AppTests {
                 6-6,4-6
                 2-6,4-8
                 """);
-        var out = executeAndReturnOut(tempFile);
+        var out = executeAndReturnStdOut(tempFile);
         assertThat(out).isEqualTo("2");
       }
     }
@@ -67,7 +67,7 @@ class AppTests {
                 6-6,4-6
                 2-6,4-8
                 """);
-        var out = executeAndReturnOut(tempFile, "--overlaps");
+        var out = executeAndReturnStdOut(tempFile, "--overlaps");
         assertThat(out).isEqualTo("4");
       }
     }

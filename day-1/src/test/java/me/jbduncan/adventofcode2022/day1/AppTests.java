@@ -19,7 +19,7 @@ class AppTests {
     return tempFile;
   }
 
-  private static String executeAndReturnOut(Object... args) throws IOException {
+  private static String executeAndReturnStdOut(Object... args) throws IOException {
     var out = new StringWriter();
     App.execute(Arrays.stream(args).map(Object::toString).toList(), new PrintWriter(out, true));
     return out.toString().strip();
@@ -51,7 +51,7 @@ class AppTests {
 
                 10000
                 """);
-        var out = executeAndReturnOut(tempFile);
+        var out = executeAndReturnStdOut(tempFile);
         assertThat(out).isEqualTo("24000");
       }
     }
@@ -83,7 +83,7 @@ class AppTests {
 
                 10000
                 """);
-        var out = executeAndReturnOut(tempFile, "--top", "3");
+        var out = executeAndReturnStdOut(tempFile, "--top", "3");
         assertThat(out).isEqualTo("45000");
       }
     }
