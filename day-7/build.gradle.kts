@@ -29,6 +29,7 @@ testing {
             useJUnitJupiter(libs.versions.junitJupiter)
             dependencies {
                 implementation(libs.truth)
+                implementation(libs.truth8)
             }
         }
     }

@@ -1,11 +1,13 @@
 package me.jbduncan.adventofcode2022.day7;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public final class App {
 
@@ -13,5 +15,10 @@ public final class App {
     execute(Arrays.asList(args), new PrintWriter(System.out, true, UTF_8));
   }
 
-  static void execute(List<String> args, PrintWriter out) throws IOException {}
+  static void execute(List<String> args, PrintWriter out) throws IOException {
+    var inputFile = Path.of(args.get(0));
+    var inMemoryFileTree = InMemoryFileTree.parse(Files.readString(inputFile, UTF_8));
+    var directorySizes = DirectorySizes.from(inMemoryFileTree);
+    out.println(directorySizes.lessThan(100_000L).sum());
+  }
 }
