@@ -14,19 +14,16 @@ public final class DirectorySizes {
 
     for (var pathInfo : TopologicalOrder.topologicalOrder(Graphs.transpose(inMemoryFileTree))) {
       if (pathInfo instanceof DirectoryInfo directoryInfo) {
-        long directorySize =
-            inMemoryFileTree.successors(directoryInfo).stream()
-                .mapToLong(
-                    pathInfo1 -> {
-                      if (pathInfo1 instanceof FileInfo fileInfo) {
-                        return fileInfo.size();
-                      } else if (pathInfo1 instanceof DirectoryInfo directoryInfo1) {
-                        return directorySizes.get(directoryInfo1);
-                      } else {
-                        return 0L;
-                      }
-                    })
-                .sum();
+        long directorySize = 0;
+        for (PathInfo successorPathInfo : inMemoryFileTree.successors(directoryInfo)) {
+          if (successorPathInfo instanceof FileInfo successorFileInfo) {
+            directorySize += successorFileInfo.size();
+          } else if (successorPathInfo instanceof DirectoryInfo successorDirectoryInfo) {
+            directorySize += directorySizes.get(successorDirectoryInfo);
+          } else {
+            directorySize += 0L;
+          }
+        }
         directorySizes.put(directoryInfo, directorySize);
       }
     }

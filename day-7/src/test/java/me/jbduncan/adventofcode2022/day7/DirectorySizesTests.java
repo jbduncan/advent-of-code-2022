@@ -14,13 +14,13 @@ class DirectorySizesTests {
     class WhenCalculatingSizeOfDirectory {
 
       @Test
-      void thenItCanReturnSumOfSizesOfAllDescendantFiles() {
+      void thenItCanReturnSumOfSizesOfAllSuccessorFiles() {
         assertThat(Fixtures.directorySizes().lessThan(Long.MAX_VALUE))
             .containsExactly(584, 4_000, 94_853, 24_937_642, 48_385_165);
       }
 
       @Test
-      void thenItCanReturnSumOfSizesOfDescendantFilesLessThanGivenSize() {
+      void thenItCanReturnSumOfSizesOfSuccessorFilesLessThanGivenSize() {
         assertThat(Fixtures.directorySizes().lessThan(24_937_642))
             .containsExactly(584, 4_000, 94_853);
       }
