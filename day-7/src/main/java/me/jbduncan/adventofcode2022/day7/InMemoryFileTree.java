@@ -9,7 +9,6 @@ import com.google.common.graph.Graph;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.ImmutableGraph;
 import com.google.common.graph.MutableGraph;
-import java.nio.file.Path;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -34,18 +33,14 @@ public final class InMemoryFileTree extends AbstractGraph<PathInfo> {
 
       var cdLineMatcher = CD_LINE_PATTERN.matcher(line);
       if (cdLineMatcher.matches()) {
-        currentDirectory =
-            new DirectoryInfo(
-                Path.of(currentDirectory.name()).resolve(cdLineMatcher.group(1)).toString());
+        currentDirectory = currentDirectory.append(cdLineMatcher.group(1));
         delegate.addNode(currentDirectory);
         continue;
       }
 
       var dirLineMatcher = DIR_LINE_PATTERN.matcher(line);
       if (dirLineMatcher.matches()) {
-        var childDirectory =
-            new DirectoryInfo(
-                Path.of(currentDirectory.name()).resolve(dirLineMatcher.group(1)).toString());
+        var childDirectory = currentDirectory.append(dirLineMatcher.group(1));
         delegate.putEdge(currentDirectory, childDirectory);
       }
 
@@ -53,8 +48,7 @@ public final class InMemoryFileTree extends AbstractGraph<PathInfo> {
       if (fileLineMatcher.matches()) {
         var file =
             new FileInfo(
-                Path.of(currentDirectory.name()).resolve(fileLineMatcher.group(2)).toString(),
-                parseInt(fileLineMatcher.group(1)));
+                currentDirectory, fileLineMatcher.group(2), parseInt(fileLineMatcher.group(1)));
         delegate.putEdge(currentDirectory, file);
       }
     }

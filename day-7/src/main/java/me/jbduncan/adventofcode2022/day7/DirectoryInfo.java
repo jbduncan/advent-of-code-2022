@@ -5,5 +5,9 @@ public record DirectoryInfo(String name) implements PathInfo {
     return EMPTY;
   }
 
+  public DirectoryInfo append(String path) {
+    return new DirectoryInfo(resolve(path));
+  }
+
   private static final DirectoryInfo EMPTY = new DirectoryInfo("");
 }
