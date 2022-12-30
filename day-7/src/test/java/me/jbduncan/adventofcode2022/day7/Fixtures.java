@@ -35,9 +35,5 @@ public final class Fixtures {
         """);
   }
 
-  public static DirectorySizes directorySizes() {
-    return DirectorySizes.from(inMemoryFileTree());
-  }
-
   private Fixtures() {}
 }

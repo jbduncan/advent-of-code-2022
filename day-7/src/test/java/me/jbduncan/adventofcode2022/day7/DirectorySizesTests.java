@@ -15,13 +15,13 @@ class DirectorySizesTests {
 
       @Test
       void thenItCanReturnSumOfSizesOfAllSuccessorFiles() {
-        assertThat(Fixtures.directorySizes().lessThan(Long.MAX_VALUE))
+        assertThat(DirectorySizes.from(Fixtures.inMemoryFileTree()).lessThan(Long.MAX_VALUE))
             .containsExactly(584, 4_000, 94_853, 24_937_642, 48_385_165);
       }
 
       @Test
       void thenItCanReturnSumOfSizesOfSuccessorFilesLessThanGivenSize() {
-        assertThat(Fixtures.directorySizes().lessThan(24_937_642))
+        assertThat(DirectorySizes.from(Fixtures.inMemoryFileTree()).lessThan(24_937_642))
             .containsExactly(584, 4_000, 94_853);
       }
     }
