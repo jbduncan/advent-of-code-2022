@@ -17,8 +17,14 @@ public final class App {
 
   static void execute(List<String> args, PrintWriter out) throws IOException {
     var inputFile = Path.of(args.get(0));
+    boolean findDirectoryToDelete =
+        args.size() > 1 && args.get(1).equals("--find-directory-to-delete");
     var inMemoryFileTree = InMemoryFileTree.parse(Files.readString(inputFile, UTF_8));
     var directorySizes = DirectorySizes.from(inMemoryFileTree);
+    if (findDirectoryToDelete) {
+      out.println(directorySizes.smallestDirectoryToRemove());
+      return;
+    }
     out.println(directorySizes.lessThan(100_000L).sum());
   }
 }

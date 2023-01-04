@@ -98,4 +98,13 @@ public final class InMemoryFileTree extends AbstractGraph<PathInfo> {
   public Set<PathInfo> successors(PathInfo node) {
     return delegate.successors(node);
   }
+
+  public DirectoryInfo rootDirectory() {
+    return nodes().stream()
+        .filter(DirectoryInfo.class::isInstance)
+        .map(DirectoryInfo.class::cast)
+        .filter(node -> predecessors(node).isEmpty())
+        .findAny()
+        .orElseThrow();
+  }
 }
