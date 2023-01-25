@@ -2,11 +2,15 @@
 googleJavaFormat = "1.15.0"
 java = "17"
 junitJupiter = "5.9.1"
+mug = "6.5"
 truth = "1.1.3"
 
 [libraries]
 guava = { module = "com.google.guava:guava", version = "31.1-jre" }
+jodaCollect = { module = "org.joda:joda-collect", version = "1.0.1" }
 jool = { module = "org.jooq:jool", version = "0.9.14" }
+mug = { module = "com.google.mug:mug", version.ref = "mug" }
+mugGuava = { module = "com.google.mug:mug-guava", version.ref = "mug" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 truth8 = { module = "com.google.truth.extensions:truth-java8-extension", version.ref = "truth" }
 
