@@ -33,7 +33,7 @@ class AppTests {
     class WhenRunningApp {
 
       @Test
-      void thenItReturns31() throws IOException {
+      void thenItReturns31() throws Exception {
         var tempFile =
             tempFile(
                 """
@@ -60,6 +60,44 @@ class AppTests {
         var inputFile = Path.of(Resources.getResource("input.txt").toURI());
         var out = executeAndReturnStdOut(inputFile);
         assertThat(out).isEqualTo("423");
+      }
+    }
+  }
+
+  @Nested
+  class GivenStar24Input {
+
+    @Nested
+    class WhenRunningApp {
+
+      @Test
+      void thenItReturns29() throws Exception {
+        var tempFile =
+            tempFile(
+                """
+                Sabqponm
+                abcryxxl
+                accszExk
+                acctuvwj
+                abdefghi
+                """);
+        var out = executeAndReturnStdOut(tempFile, "--search-paths-starting-with-a");
+        assertThat(out).isEqualTo("29");
+      }
+    }
+  }
+
+  @Nested
+  class GivenPersonalStar24Input {
+
+    @Nested
+    class WhenRunningApp {
+
+      @Test
+      void thenItReturns416() throws Exception {
+        var inputFile = Path.of(Resources.getResource("input.txt").toURI());
+        var out = executeAndReturnStdOut(inputFile, "--search-paths-starting-with-a");
+        assertThat(out).isEqualTo("416");
       }
     }
   }
